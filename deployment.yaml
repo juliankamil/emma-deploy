@@ -1,0 +1,36 @@
+kind: Service
+apiversion: v1
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+kind: Deployment
+apiversion: apps/v1
+metadata:
+  name: example-nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      imagePullSecrets:
+        - name: pipelineDockerRegistry
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
