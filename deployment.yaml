@@ -11,8 +11,8 @@ spec:
       port: 80
       targetPort: 80
 ---
-kind: Deployment
 apiversion: apps/v1
+kind: Deployment
 metadata:
   name: example-nginx
   labels:
